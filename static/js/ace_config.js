@@ -12,6 +12,7 @@ function init_ace_editor(editorEle, aceConfigObj) {
     }
 
     var editor = ace.edit(editorDiv);
+    window.editor=editor;
     editor.$blockScrolling = Infinity;
 
     editor.getSession().setValue(editorEle.value);

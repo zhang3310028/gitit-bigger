@@ -15,6 +15,6 @@
         $content$
 
         <a class="scrollup clearfix" href="#">↑ Top</a>
-
+	<a id="collapse" style="position:fixed;top:30px;right:5px" class="scrollup">[+/-]</a>
     </div>
 </div>

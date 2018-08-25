@@ -129,4 +129,57 @@ $(document).ready(function() {
     improveSpecialPages();
     UIUEImprove();
     utilsImprove(biggerConfig);
+	
+    $("a#collapse").click(function(){
+        $("div#TOC").slideToggle("slow");
+    });
+    $("div#TOC").css({"position":"fixed","top":"50px","right":"5px","height":"500px","overflow-y":"auto","display":"none"});
+    $("div#editor").css({"height":"1000px"});
+
+// which link to this topic begin
+	anchor_source_list = $("a[href^='#']:not(h1 a,h2 a,h3 a,h4 a,#TOC ul li a)");
+	title_list = $("h1,h2,h3,h4");
+	anchor_source_list.each(function(){
+		var tmp_anchor_source = $(this);
+		var source_tittle_brather=$(this);
+		while(source_tittle_brather!= undefined && source_tittle_brather.prevAll("h1,h2,h3,h4").length == 0){
+			source_tittle_brather = source_tittle_brather.parent();
+		}
+		var anchor_source_title = "";
+		if(source_tittle_brather != undefined){
+		   anchor_source_title = source_tittle_brather.prevAll("h1,h2,h3,h4").first();
+		}
+		
+		var tmp_anchor_to_tittle = title_list.filter(function(){
+			var anchor_to_tmp = $(this)
+			return anchor_to_tmp.children("a").attr("href") == tmp_anchor_source.attr("href");
+		});
+		console.log(tmp_anchor_to_tittle);
+		if(tmp_anchor_to_tittle.data("a_lists") == undefined){
+			tmp_anchor_to_tittle.data("a_lists","");
+		}
+		console.log(tmp_anchor_to_tittle.data("a_lists"));
+		var a_lists = tmp_anchor_to_tittle.data("a_lists");
+		a_lists += "<li>"+anchor_source_title.html()+"</li>";
+		tmp_anchor_to_tittle.data("a_lists",a_lists);
+		
+		
+	});
+	
+	title_list.each(function(){
+		
+		var ul_element = document.createElement("ul");
+		ul_element.innerHTML = $(this).data("a_lists");
+		$(this).after(ul_element);
+		var span_element = document.createElement("button");
+		span_element.innerHTML="+/-";
+		$(ul_element).after(span_element);
+		
+	});
+	$("button").prev("ul").css("display","none");
+	$("button").click(function(){
+	    $(this).prev("ul").slideToggle("slow");
+	});
+// which link to this topic end
+
 });
