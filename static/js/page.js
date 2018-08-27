@@ -147,20 +147,25 @@ $(document).ready(function() {
 		}
 		var anchor_source_title = "";
 		if(source_tittle_brather != undefined){
-		   anchor_source_title = source_tittle_brather.prevAll("h1,h2,h3,h4").first();
+		//   anchor_source_title = source_tittle_brather.prevAll("h1,h2,h3,h4").first();
+		   anchor_source_title = source_tittle_brather.prevAll("h1,h2,h3,h4");
 		}
 		
 		var tmp_anchor_to_tittle = title_list.filter(function(){
 			var anchor_to_tmp = $(this)
+			if("#"+anchor_to_tmp.attr("id") == tmp_anchor_source.attr("href")){
+				return true;
+			}
 			return anchor_to_tmp.children("a").attr("href") == tmp_anchor_source.attr("href");
 		});
-		console.log(tmp_anchor_to_tittle);
+		//console.log(tmp_anchor_to_tittle);
 		if(tmp_anchor_to_tittle.data("a_lists") == undefined){
 			tmp_anchor_to_tittle.data("a_lists","");
 		}
-		console.log(tmp_anchor_to_tittle.data("a_lists"));
+		//console.log(tmp_anchor_to_tittle.data("a_lists"));
 		var a_lists = tmp_anchor_to_tittle.data("a_lists");
-		a_lists += "<li>"+anchor_source_title.html()+"</li>";
+		//a_lists += "<li>"+anchor_source_title.html()+"</li>";
+		a_lists += "<li><a href='#"+anchor_source_title.attr("id")+"'>"+anchor_source_title.first().html()+"</a></li>";
 		tmp_anchor_to_tittle.data("a_lists",a_lists);
 		
 		
