@@ -136,6 +136,43 @@ $(document).ready(function() {
     $("div#TOC").css({"position":"fixed","top":"50px","right":"5px","height":"500px","overflow-y":"auto","display":"none"});
     $("div#editor").css({"height":"1000px"});
 
+// count tag s
+String.prototype.endWith=function(oString){  
+	var   reg=new   RegExp(oString+"$");  
+	return   reg.test(this);     
+} 
+var current_url = window.location.href;
+
+var $lis = {};
+if(current_url.indexOf("_categories") != -1){
+	var $lis = $("#content>ul>li");
+}else if(current_url.indexOf("_category") != -1){
+	var $lis = $("#categoryList>ul>li");
+}
+// lis which should count
+$lis.each(function(){
+	var $tmp_li = $(this);
+	var tmp_url = $(this).find("a").attr("href");
+	if(tmp_url.endWith("_categories")){
+		return;
+	}
+	$.ajax({
+		type: "GET"
+		,url:tmp_url
+		,success:function(result){
+			var tmp_div = document.createElement("div");
+			var $result_html = $(tmp_div).html(result);
+			var $all_count_li = $result_html.find("#content>ul>li");
+			var count_span = document.createElement("span");
+			count_span.innerHTML = "("+$all_count_li.size()+")";
+			$tmp_li.append(count_span);
+		}
+	});
+	
+});
+
+// count tag e
+
 // which link to this topic begin
 	anchor_source_list = $("a[href^='#']:not(h1 a,h2 a,h3 a,h4 a,#TOC ul li a)");
 	title_list = $("h1,h2,h3,h4");
