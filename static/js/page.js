@@ -143,11 +143,12 @@ String.prototype.endWith=function(oString){
 } 
 var current_url = window.location.href;
 
-var $lis = {};
 if(current_url.indexOf("_categories") != -1){
 	var $lis = $("#content>ul>li");
 }else if(current_url.indexOf("_category") != -1){
 	var $lis = $("#categoryList>ul>li");
+}else{
+                                var $lis = $([]);
 }
 // lis which should count
 $lis.each(function(){
