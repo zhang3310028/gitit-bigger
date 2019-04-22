@@ -203,7 +203,10 @@ $lis.each(function(){
 		//console.log(tmp_anchor_to_tittle.data("a_lists"));
 		var a_lists = tmp_anchor_to_tittle.data("a_lists");
 		//a_lists += "<li>"+anchor_source_title.html()+"</li>";
-		a_lists += "<li><a href='#"+anchor_source_title.attr("id")+"'>"+anchor_source_title.first().html()+"</a></li>";
+        if(a_lists == null){a_lists = ""};
+        if( a_lists.indexOf("#"+anchor_source_title.attr("id")) == -1 ){
+           a_lists += "<li><a href='#"+anchor_source_title.attr("id")+"'>"+anchor_source_title.first().html()+"</a></li>";
+        }
 		tmp_anchor_to_tittle.data("a_lists",a_lists);
 		
 		
